@@ -90,16 +90,16 @@ Where available for a university, data from the [National Student Survey 2018](h
 
 Through, universities can be compared solely by the geographic and contextual factors, by the degree of research excellence, or by the levels of student satisfaction – and these factors can be brought together to explore any correlation between the various features present in the data.
 
-### Section 3: Methodology
+## Section 3: Methodology
 _which represents the main component of the report where you discuss and describe any exploratory data analysis that you did, any inferential statistical testing that you performed, and what machine learnings were used and why._
 
-### Section 4: Results
+## Section 4: Results
 _where you discuss the results_
 
-### Section 5: Discussion
+## Section 5: Discussion
 _where you discuss any observations you noted and any recommendations you can make based on the results._
 
-### Section 6: Conclusion
+## Section 6: Conclusion
 _where you conclude the report_
 
 
