@@ -10,7 +10,19 @@ While teaching and research reputation are clearly important contributors to the
 For students and staff who place high value on the concept of the ‘university of life’, where the experience and the environment is important as well as the acquisition of knowledge and application of knowledge into research, there is an information gap around ‘what it is like to be there’ – the physical environment, green spaces and parklands, gyms and sports provision, and opportunities to engage with cultural events and visits to galleries and museums.  Most students will attend a handful of university open days once they’ve formed a shortlist, a list which will often be academically determined based on course content and predicted grades – but could we help provide ‘soft’ information on the 160 UK universities through the combination of geodata, student satisfaction and research excellence data, so that these shortlists can be informed by a broader set of criteria?  Do satisfied students tend to be concentrated in certain types of environment?  Is world-class research related to the facilities and locale of the university?
 
 ## Section 2: Data
-_where you describe the data that will be used to solve the problem and the source of the data._
+
+The business problem identifies several datasources to explore:
+
+* student satisfaction
+* research excellence
+* geographic data describing the area around each university
+
+These datasets can be obtained publicly and via registered access to geodata systems as follows:
+
+* student satisfaction data is published by the UK's Office for Students through the [National Student Survey](https://www.officeforstudents.org.uk/advice-and-guidance/student-information-and-data/national-student-survey-nss/get-the-nss-data/)
+* research excellence data is captured through the Research Excellence Framework exercise administered by sector agencies, with the [most recent data available from REF 2014](https://www.ref.ac.uk/2014/results/intro/)
+* basic geographic data on UK universities including latitude and longitude is available from the [UK Learning Providers website](http://learning-provider.data.ac.uk/)
+* detailed geographic data on facilities and services in the vicinity of each universities is available through the [Foursquare API](https://developer.foursquare.com/docs/api/venues/search)
 
 This report focuses on the 166 UK ‘mainstream’ higher education universities as described by the [UK Learning Providers data.ac.uk website](http://learning-provider.data.ac.uk/), which provides name and location data for universities.  While alternative providers have emerged in the past 5 years, there is not sufficient historical contextual data to include them in this analysis – for instance, the last research excellence exercise ran in 2014.  The UK Learning Providers dataset gives latitude and longitude coordinates for each university.  
 
@@ -88,26 +100,20 @@ For each university therefore, _n_ venue categories will be present, each with a
 
 ### Research excellence data
 
-Where available for a university, data from the [Research Excellence Framework (REF) 2014](https://www.ref.ac.uk/2014/results/intro/) was incorporated into the university data.  This REF dataset gives an assessment of research quality for each ‘unit of assessment’ (i.e. subject) where the quality of research is graded as 4 star (world-leading) down to 1 star (nationally recognised).  The data is supplied with staff size information which can be re-processed to form university-wide figures.  
+Where available for a university, data from the [Research Excellence Framework (REF) 2014](https://www.ref.ac.uk/2014/results/intro/) was incorporated into the university data.  The REF exercise is conducted periodically in the United Kingdom as a means of assessing the research quality of universities.  The REF dataset gives an assessment of research quality for each ‘unit of assessment’ (i.e. subject) where the quality of research is graded as 4 star (world-leading) down to 1 star (nationally recognised).  The data is supplied with staff size information which can be re-processed to form university-wide quality ratings using staff full-time equivalent (FTE) figures as a weighting.
 
-TALK ABOUT Consideration will be given to the appropriate measure of quality to use (e.g. grade point average versus percentage rated 4*), and to the elements of assessment used (the assessment exercise looks separately at the quality of research outputs, the impact of the research beyond academic, and the research environment at that university).
+Consideration was given to the appropriate measure of quality to use (e.g. since the quality bands are proportions falling into 4 star to 1 star, different measures such as a _grade point average_ or a _simple percentage rated 4 star_ can be used), and since both 3 star and 4 star are deemed to be internationally excellent, the metric chosen is the proportion of submissions falling in the 3 and 4 star higher quality bandings.
 
-REF data is captured per university and per unit of assessment (subject) - we are looking for a university average, so we must recalculate this average using the individual unit scores and the weighting dimension (staff full-time equivalent (FTE) gives a relative weighting between units).
-
-REF data also exists for four profiles - Outputs, Impact, Environment and then an Overall score. We transform the data for each of these four profiles.
-
-The REF assessment categorises each university's submission into 4 quality bands (plus unclassified), where 4* is the best and 1* is the lowest band.
-
-There are different methods of aggregating up from the 4 quality bands, including a grade point average. In this report we have decided to focus on the proportion of submissions which attract the top quality bands (4 and 3 star submissions) as a way of differentiating between research excellence at universities, so we create a new column to hold this subtotal, and then pivot the dataset so that there is one row per university and a 3+4 star score for each of the profiles. This is the same structure as the main university dataset so we can then merge it to create our single version of the three static data files.
+The assessment exercise looks separately at the quality of research outputs, the impact of the research beyond academia, and the research environment at that university.  In the source data these can be combined using weightings to give an Overall score here, but since this is a duplicate of the individual metric scores the Overall score was not used with preference for more granular data and a higher number of features.
 
 ### Student satisfaction data
 
 Where available for a university, data from the [National Student Survey 2018](https://www.officeforstudents.org.uk/advice-and-guidance/student-information-and-data/national-student-survey-nss/get-the-nss-data/) was incorporated into the university data.  This dataset gives an assessment of student satisfaction for universities overall as well as by subject, across a range of 27 questions.  Again, student population sizes were available should further processing be required.
 
-TALK ABOUT Q27 and dimensions
-TALK ABOUT MISSING DATA
+The student survey questions can be clustered into a number of dimensions (for instance, the first four questions are in the 'The teaching on my course' dimension.  There are eight dimensions, plus a final question on 'Overall, I am satisfied with the quality of the course'.  The attention of the higher education sector overall is often on the this final question as a simple measure of satisfaction, but there is often notable variation per institution in the dimension scores which can highlight exceptional over or under performance which is not visible in the overall satisfaction question.  This question also is tightly bunched, with satisfaction across universities limited to a ~10 percentage point range.
 
-### Dataset processing summary
+## Section 3: Methodology
+_which represents the main component of the report where you discuss and describe any exploratory data analysis that you did, any inferential statistical testing that you performed, and what machine learnings were used and why._
 
 Through, universities can be compared solely by the geographic and contextual factors, by the degree of research excellence, or by the levels of student satisfaction – and these factors can be brought together to explore any correlation between the various features present in the data.
 
@@ -118,10 +124,6 @@ FS
 The getMatchingVenues function takes lat/long and a single category (it would also take a list of comma-separated categories but here we have chosen to iterate through each category individually, since early tests showed that many results of a multi-category search would exceed the 50 result Foursquare limit and so be limited in their usefulness. By querying each category individually we increase the number of calls to the Foursquare API but increase the possible number of results substantially and lower the risk of hitting the 50 result limit).
 
 The writecsv argument can be provided to write a static CSV copy of the results to avoid hitting the API unnecessarily. These CSVs can be deleted should a refresh of the data be required.
-
-
-## Section 3: Methodology
-_which represents the main component of the report where you discuss and describe any exploratory data analysis that you did, any inferential statistical testing that you performed, and what machine learnings were used and why._
 
 ## Section 4: Results
 _where you discuss the results_
