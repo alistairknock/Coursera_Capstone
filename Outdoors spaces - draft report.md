@@ -203,6 +203,7 @@ We again assessed the relationships between the three main features with scatter
 |NSS Q27 and positive facility count | -0.390 | 0.152 | <0.001 |
 |Outputs and positive facility count | 0.327 | 0.107  | <0.001 |
 
+It should be noted that the coefficient of determination (R squared) for these combinations is not high, as observed in the high degree of scatter in all the graphs below.  Any suggested correlation is likely to be weak.
 
 ![clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure9.PNG)
 
@@ -234,8 +235,8 @@ Box plots were used to view the distribution of values within each cluster, summ
 | Number | Label | Colour | Number of universities | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
 |---|---|---|---|---|---|---|---|---|---|
 | 0 | High positive facilities, low NSS, high REF | Red | 20 | 78% | 82% | 61% | 78% | 90% | 97% |
-| 1 | Low positive facilities, high NSS, high REF | Purple | 16 | 82% | 87% | 55% | 74% | 14% | 36% |
-| 2 | High positive facilities, no NSS, high REF | Blue | 97 | n/a | n/a | 59% | 83% | 32% | 97% |
+| 1 | Low positive facilities, high NSS, high REF | Purple | 97 | 82% | 87% | 55% | 74% | 14% | 36% |
+| 2 | High positive facilities, no NSS, high REF | Blue | 16 | n/a | n/a | 59% | 83% | 32% | 97% |
 | 3 | Low positive facilities, high NSS, low REF | Yellow | 33 | 80% | 86% | 29% | 36% | 13% | 36% |
 
 
@@ -256,6 +257,8 @@ We ran the same k-means clustering and exploratory visualisations on this subset
 |NSS Q27 and outputs | 0.214 | 0.046 | 0.018 |
 |NSS Q27 and positive facility count | -0.239 | 0.057 | 0.008 |
 |Outputs and positive facility count | 0.272 | 0.074  | 0.003 |
+
+Again, the coefficient of determination (R squared) for these combinations is not high and the correlation coefficient is lower than that observed in the full dataset, reflecting the removal of the outliers skewing the original result.
 
 ![Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure13.PNG)
 
@@ -297,8 +300,30 @@ Taken at face value, original cluster 0 (London) equates to new cluster 1; the N
 ## Section 4: Results
 _where you discuss the results_
 
+Returning to the questions of the original business problem:
+
+1. Could we help provide ‘soft’ information on the 160 UK universities through the combination of geodata, student satisfaction and research excellence data, so that these shortlists can be informed by a broader set of criteria? 
+2. Do satisfied students tend to be concentrated in certain types of environment? 
+3. Is world-class research related to the facilities and locale of the university?
+
+The findings through the methodology section of this review show that it is indeed possible to mix less formal geographic data with the standardised datasets produced for the higher education sector via the National Student Survey and Research Excellence Framework.  However, doing so confirms that there is great variability in the environment around universities, for instance, for universities having an art gallery within five kilometres, the upper quartile university has ~42 within the vicinity whereas the lower quartile has ~7 (see figure 3).  Furthermore, the density of major population centres such as London leads to results which overpower data observations in other more rural locations, meaning there is an argument to separating the geographic dataset into subsets which more closely match areas with similar socio-geographic characteristics (figure 4 and 5).
+
+Pairwise linear regression across the three main features suggested no relationship between NSS and REF, a potential inverse relationship between NSS and the positive facility count (that is, satisfaction is increased for universities with fewer positive facilities in the area), and a potential positive relationship between REF outputs and the positive facility count.  In all cases though, the correlation is weak and the datapoints are sufficiently dispersed such that linear regression does not provide a good fit for these pairwise comparisons.
+
+Three sets of k-means clustering analysis were ran:
+
+* three core features, full dataset
+* three core features, subset of dataset excluding London and NSS non-respondents
+* 300+ features, full dataset
+
+
+ 
 ## Section 5: Discussion
 _where you discuss any observations you noted and any recommendations you can make based on the results._
+
+FQ not designed for this
+
+
 
 ## Section 6: Conclusion
 _where you conclude the report_
