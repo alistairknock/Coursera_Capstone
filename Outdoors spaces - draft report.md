@@ -198,6 +198,9 @@ Again, the coefficient of determination (R squared) for these combinations is no
 
 _Figure 13: Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis_
 
+
+Figure 13 shows REF outputs against count of positive facilities.  With the exception of cluster 2, here we have clear separation of the clusters, with cluster 0 remaining in the top positive facility range, and the other clusters being separated cleanly by low and mid-high REF performance.  The regression line shows positive correlation, though the high degree of scatter leads to a low R-square value indicating the line does not indicate good fit.  It is interesting to note however the separation of universities into three main discrete clusters here however - this may be nothing to do with the features selected and may instead be due to other explanatory factors such as some universities being research-intensive and some consisting of mainly teaching provision.
+
 **Table 5: Cluster labels with lower and upper quartiles, subset excluding London and NSS non-respondents**
 (note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
 
@@ -273,7 +276,7 @@ Finally, since this exploration was iterative in nature it may be helpful to rev
 
 It has been shown that it is certainly possible to link geographic, research quality and student satisfaction datasets in order to explore the possible relationship between the positive features of the surrounding environment and the performance of a university.  The relationships however appear to be weak when using only these three metrics - the variability and number of outliers in all comparisons does not lead to any clear correlation.  It is of note for further research that there may be a negative relationship between positive facilities and student satisfaction, but a positive relationship when compared against research output quality.  That is, the expectations and needs of staff may not be the same as those of students.  
 
-As might have been expected at the outset of this analysis, the diversity of universities which exist within the United Kingdom, and the diverse drivers for different types of student and staff to want to study and work at these universities, is part of the richness of a mature education landscape which cannot be reduced down to a few performance metrics.
+As might have been expected at the outset of this analysis, the diversity of universities which exist within the United Kingdom, with specialist teaching providers mixed with huge research intensive organisations, coupled with the diverse drivers for different types of student and staff to want to study and work at these universities, makes for a rich and mature education landscape which cannot be reduced down to a few performance metrics.
 
 ## Annex 1: Foursquare categories
 
