@@ -67,17 +67,17 @@ The full set of features from the three data sources contains 3 research indicat
 
 * REF outputs, 'Outputs'
 * NSS question 27, 'NSS_Q27'
-* Foursquare subtotal of positive venues across all specified categories, 'TotalCount'
+* Foursquare subtotal of positive facilities across all specified categories, 'TotalCount'
 
 **Table 1: Summary statistics on the Foursquare dataset**
 
 | Description | Figure |
 |---|---|
 |Total number of universities | 166 |
-|Total number of positive venues |80948 |
+|Total number of positive facilities |80948 |
 |Total number of categories | 59 |
-|Average positive venues per universities | 487.64 |
-|Average positive venues per category | 1372.00 |
+|Average positive facilities per universities | 487.64 |
+|Average positive facilities per category | 1372.00 |
 
 The distribution of facilities in each category was reviewed to check whether the results matched up with expectations given knowledge of the general geography of the UK:
 
@@ -85,7 +85,7 @@ The distribution of facilities in each category was reviewed to check whether th
 
 _Figure 2: Histogram showing total count of positive facilities across all universities split by category_
 
-Of the 81,0000 venues found, parks and churches constitute over 10%, followed by art galleries, gyms and fitness centres.  This seemed appropriate given the relatively green and historic environment of the UK.
+Of the 81,0000 positive facilities found, parks and churches constitute over 10%, followed by art galleries, gyms and fitness centres.  This seemed appropriate given the relatively green and historic environment of the UK.
 
 We then looked at variability using a boxplot showing the spread of universities within each category:
 
@@ -95,7 +95,7 @@ _Figure 3: Box plot distribution of universities and their count of positive fac
 
 The box plots show a reasonably high range between upper and lower quartile, which reflects the mixture of urban and rural universities in the UK.  Some of these plots give a clue to the geography - for instance, harbor/marina has a comparatively low median value, but high upper quartile and outlier markers, because where some harbor facilities exist there are likely to be many more around it due to proximity to the coastline.  The same pattern can be observed with Art Gallery (cities) and Trail (countryside).
 
-Finally, we used a histogram to observe the number of universities which have X numbers of venues around them to identify whether the distribution is relatively normal.  At this point a total count of all venues in all categories is added (i.e. the total number of venues within 5 kilometres of the university which are of the 'positive' type of category listed).  This gives a way of comparing the relative environment of each university.
+Finally, we used a histogram to observe the number of universities which have X numbers of positive facilities around them to identify whether the distribution is relatively normal.  At this point a total count of all positive facilities in all categories is added (i.e. the total number of positive facilities within 5 kilometres of the university which are of the 'positive' type of category listed).  This gives a way of comparing the relative environment of each university.
 
 ![histogram showing counts of universities with X positive facilities](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure4.PNG)
 
@@ -123,7 +123,7 @@ _Figure 7: Scatter plot of universities using NSS question 27 on the X axis and 
 
 _Figure 8: Scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
 
-The initial scatters indicated there may be a weak negative relationship between student satisfaction - access to greater numbers of venues correlates to a small decrease in satisfaction. Conversely, the quality of REF outputs is positively correlated with the number of venues.  The approach taken to further investigate this was to using k-means clustering and DBSCAN to cluster the data and observe the differences in features between these clusters. Mapping these clusters also helped to identify any confounding and contributing geographical factors not currently present in the featureset.
+The initial scatters indicated there may be a weak negative relationship between student satisfaction - access to greater numbers of positive facilities correlates to a small decrease in satisfaction. Conversely, the quality of REF outputs is positively correlated with the number of positive facilities.  The approach taken to further investigate this was to using k-means clustering and DBSCAN to cluster the data and observe the differences in features between these clusters. Mapping these clusters also helped to identify any confounding and contributing geographical factors not currently present in the featureset.
 
 First, we scaled the features and used the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  (Running a test using DBScan required high epsilon values (0.5 with a normalised range of 0-1.0) and low minimum sample values (10 from 166) to begin to separate any cluster from the noise, which likely indicates that the dataset does not cluster well (either in general or using this density method).)
 
@@ -153,15 +153,15 @@ The regression line is weak and the spread of the clusters does not initially su
 
 _Figure 10: Clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis_
 
-In contrast to the NSS/REF plot, here cluster 0 is distinct from other clusters, with all points showing high values for the positive venues feature.  As before, the zero NSS values mean cluster 2 is not plotted.  Cluster 1 and 3 overlap considerably and are not discrete in this view.  The regression line shows a reasonably strong negative correlation, though this may be influenced by the atypically high values from cluster 0.
+In contrast to the NSS/REF plot, here cluster 0 is distinct from other clusters, with all points showing high values for the positive facilities feature.  As before, the zero NSS values mean cluster 2 is not plotted.  Cluster 1 and 3 overlap considerably and are not discrete in this view.  The regression line shows a reasonably strong negative correlation, though this may be influenced by the atypically high values from cluster 0.
 
 ![clustered scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure11.PNG)
 
 _Figure 11: Clustered scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
 
-This chart shows REF outputs against count of positive venues.  With the exception of cluster 2, here we have clear separation of the clusters, with cluster 0 remaining in the top positive venue range, and the other clusters being separated cleanly by low and mid-high REF performance.  The regression line shows positive correlation.
+This chart shows REF outputs against count of positive facilities.  With the exception of cluster 2, here we have clear separation of the clusters, with cluster 0 remaining in the top positive facilities range, and the other clusters being separated cleanly by low and mid-high REF performance.  The regression line shows positive correlation.
 
-Box plots were used to view the distribution of values within each cluster, summarised in table 3 below and which confirms that cluster 2 contained no NSS results, cluster 3 contained weak REF results, and cluster 0 contained very high counts of positive facilities - notably while cluster 1 and 3 contain small quantities of positive venues, cluster 2 shows significant range.
+Box plots were used to view the distribution of values within each cluster, summarised in table 3 below and which confirms that cluster 2 contained no NSS results, cluster 3 contained weak REF results, and cluster 0 contained very high counts of positive facilities - notably while cluster 1 and 3 contain small quantities of positive facilities, cluster 2 shows significant range.
 
 **Table 3: Cluster labels with lower and upper quartiles**
 (note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
@@ -180,7 +180,7 @@ Box plots were used to view the distribution of values within each cluster, summ
 
 _Figure 12: UK map plotting all universities with k-means clusters as colours_
 
-The counts of universities in each cluster are not even, with the largest cluster (97) holding nearly three times the quantity of the second largest (33).  When mapped, the purple cluster contains a large and diverse number of geographic points and London effectively has its own cluster (red), which is presumably a function of the density of all types of venues in the capital when compared to less dense urban areas and rural areas elsewhere in the country.  To investigate this further, we set aside the London cluster and the cluster which has no student satisfaction data, to focus on the remaining 130 institutions which have less polarised features.
+The counts of universities in each cluster are not even, with the largest cluster (97) holding nearly three times the quantity of the second largest (33).  When mapped, the purple cluster contains a large and diverse number of geographic points and London effectively has its own cluster (red), which is presumably a function of the density of all types of facilities in the capital when compared to less dense urban areas and rural areas elsewhere in the country.  To investigate this further, we set aside the London cluster and the cluster which has no student satisfaction data, to focus on the remaining 130 institutions which have less polarised features.
 
 We ran the same k-means clustering and exploratory visualisations on this subset, again with k=4 providing the optimal number of clusters.
 
@@ -216,7 +216,7 @@ Again, running a test using DBScan required high epsilon values (0.5 with a norm
 
 ### Iteration 3, all features
 
-Finally, we returned to the original three datasets and merged them to form a highly detailed dataset which included all 27 NSS questions, 3 profiles from REF, and a large number of venue categories with counts of positive venues.  (60 categories were provided to the API call, but Foursquare appears to return similar/subcategories in addition, so the total number of features in this dataset is now 340).  Our interest was mainly to test whether the simplified three-feature set was a reasonable proxy for the more granular data.
+Finally, we returned to the original three datasets and merged them to form a highly detailed dataset which included all 27 NSS questions, 3 profiles from REF, and a large number of  categories with counts of positive facilities.  (60 categories were provided to the API call, but Foursquare appears to return similar/subcategories in addition, so the total number of features in this dataset is now 340).  Our interest was mainly to test whether the simplified three-feature set was a reasonable proxy for the more granular data.
 
 The same process of k-means clustering was run on this detailed set (this time k=5) and the counts of universities falling into these five clusters was compared with the counts in the original four clusters.  Table 6 summarises these counts:
 
@@ -256,7 +256,6 @@ For 'is world-class research....', two clusters had high REF results and contain
 Finally, when using the fully featured dataset, a new division emerged in two of the original clusters, which may indicate that the simple three-way feature set is overlooking another explanatory variable(s) which is present in the full dataset, or alternatively that the broader levels of variation in the detailed features lead to a subtly different pattern emerging in the new cluster.
 
 ## Section 5: Discussion
-_where you discuss any observations you noted and any recommendations you can make based on the results._
 
 Throughout the analysis conducted, a number of issues emerged both in relation to the data and the methodology.  Firstly, the boycott of the NSS resulted in an unusable set of universities, and consideration should be given to whether this analysis should have been run with an earlier, more complete dataset.  Some of the universities excluded from the satisfaction dataset appear at the high end of the REF dataset, so dropping these records entirely presents problems for analysis of what was intended to be a "whole-system" (all full service universities in a country) appraisal. 
 
@@ -272,7 +271,9 @@ Finally, since this exploration was iterative in nature it may be helpful to rev
 
 ## Section 6: Conclusion
 
-It has been shown that it is certainly possible to link geographic, research quality and student satisfaction datasets in order to explore the possible relationship between the positive features of the surrounding environment and the performance of a university.  The relationships however appear to be weak when using only these three metrics - the variability and number of outliers in all comparisons does not lead to any clear correlation.  It is of note for further research that there may be a negative relationship between positive facilities and student satisfaction, but a positive relationship when compared against research output quality.  That is, the expectations and needs of staff may not be the same as those of students.  As might have been expected at the outset of this analysis, the diversity of universities which exist within the United Kingdom, and the diverse drivers for different types of student and staff to want to study and work at these universities, is part of the richness of a mature education landscape which cannot be reduced down to a few performance metrics.
+It has been shown that it is certainly possible to link geographic, research quality and student satisfaction datasets in order to explore the possible relationship between the positive features of the surrounding environment and the performance of a university.  The relationships however appear to be weak when using only these three metrics - the variability and number of outliers in all comparisons does not lead to any clear correlation.  It is of note for further research that there may be a negative relationship between positive facilities and student satisfaction, but a positive relationship when compared against research output quality.  That is, the expectations and needs of staff may not be the same as those of students.  
+
+As might have been expected at the outset of this analysis, the diversity of universities which exist within the United Kingdom, and the diverse drivers for different types of student and staff to want to study and work at these universities, is part of the richness of a mature education landscape which cannot be reduced down to a few performance metrics.
 
 ## Annex 1: Foursquare categories
 
