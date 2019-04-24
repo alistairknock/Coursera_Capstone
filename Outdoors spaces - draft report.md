@@ -149,7 +149,7 @@ The distribution of facilities in each category was reviewed to check whether th
 
 ![histogram showing total count of positive facilities across all universities split by category](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure2.PNG)
 
-_Figure 2: Histogram showing total count of positive facilities across all universities split by category
+_Figure 2: Histogram showing total count of positive facilities across all universities split by category_
 
 Of the 81,0000 venues found, parks and churches constitute over 10%, followed by art galleries, gyms and fitness centres.  This seemed appropriate given the relatively green and historic environment of the UK.
 
@@ -157,7 +157,7 @@ We then looked at variability using a boxplot showing the spread of universities
 
 ![box plot distribution of universities and their count of positive facilities in each category](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure3.PNG)
 
-_Figure 3: Box plot distribution of universities and their count of positive facilities in each category
+_Figure 3: Box plot distribution of universities and their count of positive facilities in each category_
 
 The box plots show a reasonably high range between upper and lower quartile, which reflects the mixture of urban and rural universities in the UK.  Some of these plots give a clue to the geography - for instance, harbor/marina has a comparatively low median value, but high upper quartile and outlier markers, because where some harbor facilities exist there are likely to be many more around it due to proximity to the coastline.  The same pattern can be observed with Art Gallery (cities) and Trail (countryside).
 
@@ -165,13 +165,13 @@ Finally, we used a histogram to observe the number of universities which have X 
 
 ![histogram showing counts of universities with X positive facilities](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure4.PNG)
 
-_Figure 4: Histogram showing counts of universities with X positive facilities
+_Figure 4: Histogram showing counts of universities with X positive facilities_
 
 The high reading in the last bar of this histogram (circa 25 universities with more than 1000 positive facilities within radius) seemed unusual, with a suspicion that it was related to London. So we mapped the results again with count as the colour (black as the highest count):
 
 ![UK map focused on London and the south east, with black markers showing the 1000+ positive facility universities](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure5.PNG)
 
-_Figure 5: UK map focused on London and the south east, with black markers showing the 1000+ positive facility universities
+_Figure 5: UK map focused on London and the south east, with black markers showing the 1000+ positive facility universities_
 
 Since there is the possibility of London universities behaving as exceptional cases due to the density of the city, we can return to this in a subsequent iteration with the option of excluding these outlier universities.
 
@@ -179,16 +179,39 @@ We now assess the relationships between the three main features with scatter plo
 
 ![scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure6.PNG)
 
-_Figure 6: Scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis
+_Figure 6: Scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis_
 
 ![scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure7.PNG)
 
-_Figure 7: Scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis
+_Figure 7: Scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis_
 
 ![scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure8.PNG)
 
-_Figure 8: Scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis
+_Figure 8: Scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
 
+The initial scatters indicated there may be a weak negative relationship between student satisfaction - access to greater numbers of venues correlates to a small decrease in satisfaction. Conversely, the quality of REF outputs is positively correlated with the number of venues.  The approach taken to further investigate this was to using k-means clustering and DBSCAN to cluster the data and observe the differences in features between these clusters. Mapping these clusters also helped to identify any confounding and contributing geographical factors not currently present in the featureset.
+
+First, we scaled the features and use the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  
+
+![clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure9.PNG)
+
+_Figure 9: Clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis_
+
+![clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure10.PNG)
+
+_Figure 10: Clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis_
+
+![clustered scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure11.PNG)
+
+_Figure 11: Clustered scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
+
+Pearson's correlation co-efficient and R-squared values for each combination:
+
+| Combination | Pearson's | R-squared | p-value |
+|---|---|---|---|
+|NSS Q27 and outputs | 0.096 | 0.009 | 0.259 |
+|NSS Q27 and positive facility count | -0.390 | 0.152 | <0.001 |
+|Outputs and positive facility count | 0.327 | 0.107  | <0.001 |
 
 ## Section 4: Results
 _where you discuss the results_
