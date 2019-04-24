@@ -292,7 +292,7 @@ The same process of k-means clustering was run on this detailed set (this time k
 | High positive facilities, no NSS, high REF | - | 4 | 7 | - | 5 |
 | Low positive facilities, high NSS, low REF | 15 | - | - | 18 | - |
 
-Taken at face value, original cluster 0 (London) equates to new cluster 1; the NSS non-respondent group is dispersed into other clusters, presumably since other features now have increased weight to offset the absence of one of the three original features; and interestingly, clusters 2 and 3 are each split in near-equal proportions into clusters 0 and 3; that is, half of cluster 2 and half of cluster 3 are now in cluster 0.
+Taken at face value, original cluster 0 (London) equates to new cluster 1; the NSS non-respondent group is dispersed into other clusters, presumably since other features now have increased weight to offset the absence of one of the three original features; and interestingly, clusters 2 and 3 are each split in near-equal proportions into clusters 0 and 3; that is, half of cluster 2 and half of cluster 3 are now in cluster 0, and similarly for the other halves appearing in new cluster 3.  Analysis of the original three features in this new set shows the new clusters to be similar across all three features to the original clusters, indicating that the distinction between new cluster 2 and cluster 3 is likely to be something other than the three original features.
 
 ## Section 4: Results
 _where you discuss the results_
