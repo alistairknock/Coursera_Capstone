@@ -228,18 +228,36 @@ Box plots were used to view the distribution of values within each cluster, summ
 **Table 3: Cluster labels with lower and upper quartiles**
 (note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
 
-| Number | Label | Colour | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
+| Number | Label | Colour | Number of universities | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
 |---|---|---|---|---|---|---|---|---|
-| 0 | High positive facilities, low NSS, high REF | Red | 78% | 82% | 61% | 78% | 90% | 97% |
-| 1 | Low positive facilities, high NSS, high REF | Purple | 82% | 87% | 55% | 74% | 14% | 36% |
-| 2 | High positive facilities, no NSS, high REF | Blue | n/a | n/a | 59% | 83% | 32% | 97% |
-| 3 | Low positive facilities, high NSS, low REF | Yellow | 80% | 86% | 29% | 36% | 13% | 36% |
+| 0 | High positive facilities, low NSS, high REF | Red | 20 | 78% | 82% | 61% | 78% | 90% | 97% |
+| 1 | Low positive facilities, high NSS, high REF | Purple | 16 | 82% | 87% | 55% | 74% | 14% | 36% |
+| 2 | High positive facilities, no NSS, high REF | Blue | 97 | n/a | n/a | 59% | 83% | 32% | 97% |
+| 3 | Low positive facilities, high NSS, low REF | Yellow | 33 | 80% | 86% | 29% | 36% | 13% | 36% |
 
-By including the clusters on the map, it is clear that the London-effect remains:
+
+### Iteration 2, focusing on a subset of clusters
 
 ![map of UK universities including clusters as colours](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure12.PNG)
 
-_Figure 1: UK map plotting all universities with k-means clusters as colours_
+_Figure 12: UK map plotting all universities with k-means clusters as colours_
+
+The counts of universities in each cluster are not even, with the largest cluster (97) holding nearly three times the quantity of the second largest (33).  When mapped, the purple cluster contains a large and diverse number of geographic points and London effectively has its own cluster (red), which is presumably a function of the density of all types of venues in the capital when compared to less dense urban areas and rural areas elsewhere in the country.  To investigate this further, we set aside the London cluster and the cluster which has no student satisfaction data, to focus on the remaining 130 institutions which have less polarised features.
+
+We ran the same k-means clustering and exploratory visualisations on this subset, again with k=4 providing the optimal number of clusters.
+
+**Table 3: Pearson's correlation co-efficient and R-squared values for each combination, excluding London:**
+
+| Combination | Pearson's | R-squared | p-value |
+|---|---|---|---|
+|NSS Q27 and outputs | 0.214 | 0.046 | 0.018 |
+|NSS Q27 and positive facility count | -0.239 | 0.057 | 0.008 |
+|Outputs and positive facility count | 0.272 | 0.074  | 0.003 |
+
+![Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure13.PNG)
+
+_Figure 13: Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis_
+
 
 ## Section 4: Results
 _where you discuss the results_
