@@ -123,8 +123,71 @@ With the data available, universities can be compared solely by the geographic a
 
 We began by obtaining copies of the three relevant flat files with the aim of removing unneeded columns and to restructure them into one dataframe which contains one record per university, the latitude/longitude, the overall student satisfaction measure, and research excellence measures.
 
-FS
+We regularly used statistics and data visualisations to check the integrity of the dataset, for instance ensuring that the geography of universities was appropriate before running the Foursquare queries as in figure 1:
 
+![map of UK](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure1.PNG)
+
+_Figure 1: UK map plotting all universities_
+
+The full set of features from the three data sources contains 3 research indicators (excluding the overall subtotal), 27 satisfaction questions (including the discrete satisfaction question for now since it is a separate question rather than a subtotal), and 59 Foursquare categories.  This gives a total of 89 features to consider.  Initially in the first iteration we focused on a simple subset of these to explore and understand the data, particularly whether there was any clear relationship between the variables.  This iteration used three features (the axis label is specified in single quotes):
+
+* REF outputs, 'Outputs'
+* NSS question 27, 'NSS_Q27'
+* Foursquare subtotal of positive venues across all specified categories, 'TotalCount'
+
+Summary statistics on the Foursquare dataset include:
+
+| Description | Figure |
+|---|---|
+|Total number of universities | 166 |
+|Total number of positive venues |80948 |
+|Total number of categories | 59 |
+|Average positive venues per universities | 487.64 |
+|Average positive venues per category | 1372.00 |
+
+The distribution of facilities in each category was reviewed to check whether the results matched up with expectations given knowledge of the general geography of the UK:
+
+![histogram showing total count of positive facilities across all universities split by category](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure2.PNG)
+
+_Figure 2: Histogram showing total count of positive facilities across all universities split by category
+
+Of the 81,0000 venues found, parks and churches constitute over 10%, followed by art galleries, gyms and fitness centres.  This seemed appropriate given the relatively green and historic environment of the UK.
+
+We then looked at variability using a boxplot showing the spread of universities within each category:
+
+![box plot distribution of universities and their count of positive facilities in each category](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure3.PNG)
+
+_Figure 3: Box plot distribution of universities and their count of positive facilities in each category
+
+The box plots show a reasonably high range between upper and lower quartile, which reflects the mixture of urban and rural universities in the UK.  Some of these plots give a clue to the geography - for instance, harbor/marina has a comparatively low median value, but high upper quartile and outlier markers, because where some harbor facilities exist there are likely to be many more around it due to proximity to the coastline.  The same pattern can be observed with Art Gallery (cities) and Trail (countryside).
+
+Finally, we used a histogram to observe the number of universities which have X numbers of venues around them to identify whether the distribution is relatively normal.  At this point a total count of all venues in all categories is added (i.e. the total number of venues within 5 kilometres of the university which are of the 'positive' type of category listed).  This gives a way of comparing the relative environment of each university.
+
+![histogram showing counts of universities with X positive facilities](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure4.PNG)
+
+_Figure 4: Histogram showing counts of universities with X positive facilities
+
+The high reading in the last bar of this histogram (circa 25 universities with more than 1000 positive facilities within radius) seemed unusual, with a suspicion that it was related to London. So we mapped the results again with count as the colour (black as the highest count):
+
+![UK map focused on London and the south east, with black markers showing the 1000+ positive facility universities](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure5.PNG)
+
+_Figure 5: UK map focused on London and the south east, with black markers showing the 1000+ positive facility universities
+
+Since there is the possibility of London universities behaving as exceptional cases due to the density of the city, we can return to this in a subsequent iteration with the option of excluding these outlier universities.
+
+We now assess the relationships between the three main features with scatter plots and a quadratic linear regression:
+
+![scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure6.PNG)
+
+_Figure 6: Scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis
+
+![scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure7.PNG)
+
+_Figure 7: Scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis
+
+![scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure8.PNG)
+
+_Figure 8: Scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis
 
 
 ## Section 4: Results
