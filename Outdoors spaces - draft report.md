@@ -114,6 +114,8 @@ Where available for a university, data from the [National Student Survey 2018](h
 
 The student survey questions can be clustered into a number of dimensions (for instance, the first four questions are in the 'The teaching on my course' dimension.  There are eight dimensions, plus a final question on 'Overall, I am satisfied with the quality of the course'.  The attention of the higher education sector overall is often on the this final question as a simple measure of satisfaction, but there is often notable variation per institution in the dimension scores which can highlight exceptional over or under performance which is not visible in the overall satisfaction question.  This question also is tightly bunched, with satisfaction across universities limited to a ~10 percentage point range.
 
+This dataset is normally robust and complete - however, the most recent year's data was affected by a student union boycott of the survey, leading to inadmissible data for several institutions.
+
 ## Section 3: Methodology
 _which represents the main component of the report where you discuss and describe any exploratory data analysis that you did, any inferential statistical testing that you performed, and what machine learnings were used and why._
 
@@ -298,7 +300,6 @@ The same process of k-means clustering was run on this detailed set (this time k
 Taken at face value, original cluster 0 (London) equates to new cluster 1; the NSS non-respondent group is dispersed into other clusters, presumably since other features now have increased weight to offset the absence of one of the three original features; and interestingly, clusters 2 and 3 are each split in near-equal proportions into clusters 0 and 3; that is, half of cluster 2 and half of cluster 3 are now in cluster 0, and similarly for the other halves appearing in new cluster 3.  Analysis of the original three features in this new set shows the new clusters to be similar across all three features to the original clusters, indicating that the distinction between new cluster 2 and cluster 3 is likely to be something other than the three original features.
 
 ## Section 4: Results
-_where you discuss the results_
 
 Returning to the questions of the original business problem:
 
@@ -306,26 +307,37 @@ Returning to the questions of the original business problem:
 2. Do satisfied students tend to be concentrated in certain types of environment? 
 3. Is world-class research related to the facilities and locale of the university?
 
-The findings through the methodology section of this review show that it is indeed possible to mix less formal geographic data with the standardised datasets produced for the higher education sector via the National Student Survey and Research Excellence Framework.  However, doing so confirms that there is great variability in the environment around universities, for instance, for universities having an art gallery within five kilometres, the upper quartile university has ~42 within the vicinity whereas the lower quartile has ~7 (see figure 3).  Furthermore, the density of major population centres such as London leads to results which overpower data observations in other more rural locations, meaning there is an argument to separating the geographic dataset into subsets which more closely match areas with similar socio-geographic characteristics (figure 4 and 5).
+The findings through the methodology section of this review show that it is indeed possible to mix less formal geographic data with the standardised datasets produced for the higher education sector via the National Student Survey and Research Excellence Framework.  However, doing so confirms that there is great variability in the environment around universities, for instance, for universities having an art gallery within five kilometres, the upper quartile university has ~42 within the vicinity whereas the lower quartile has ~7 (see figure 3).  Furthermore, the density of major population centres such as London leads to results which overpower data observations in other more rural locations, meaning there is an argument to separating the geographic dataset into subsets which more closely match areas with similar socio-geographic characteristics (figure 4 and 5).  Similarly, the absence of NSS results for some universities due to a boycott of the survey leads to inadequate data for some universities, notably including Oxford and Cambridge.
 
 Pairwise linear regression across the three main features suggested no relationship between NSS and REF, a potential inverse relationship between NSS and the positive facility count (that is, satisfaction is increased for universities with fewer positive facilities in the area), and a potential positive relationship between REF outputs and the positive facility count.  In all cases though, the correlation is weak and the datapoints are sufficiently dispersed such that linear regression does not provide a good fit for these pairwise comparisons.
 
-Three sets of k-means clustering analysis were ran:
+Exploring questions 2 and 3 further, three sets of k-means clustering analysis were ran:
 
-* three core features, full dataset
-* three core features, subset of dataset excluding London and NSS non-respondents
-* 300+ features, full dataset
+1. three core features, full dataset
+2. three core features, subset of dataset excluding London and NSS non-respondents
+3. 300+ features, full dataset
 
+As described above, the inclusion of London and NSS non-respondents in analysis 1 was found to skew results, so exploration of questions 2 and 3 is confined to the subset of data used in analysis 2.  For 'do satisfied students...', of the four clusters, one cluster containing 40 of 130 universities had a higher span of NSS overall satisfaction scores.  This cluster also had high REF results - but had a low number of positive facilities.  It is possible that there is a relationship here which suggests an interplay between student satisfaction and the surrounding facilities, but the absence of NSS data for a number of universities confounds a conclusion here and further investigation is required.
 
- 
+For 'is world-class research....', two clusters had high REF results and contained 80 of 130 universities.  These universities were equally split between those with high and low positive facility rates, indicating that positive facilities is not likely to be an explanatory factor.  
+
+Finally, when using the fully featured dataset, a new division emerged in two of the original clusters, which may indicate that the simple three-way feature set is overlooking another explanatory variable(s) which is present in the full dataset, or alternatively that the broader levels of variation in the detailed features lead to a subtly different pattern emerging in the new cluster.
+
 ## Section 5: Discussion
 _where you discuss any observations you noted and any recommendations you can make based on the results._
 
-FQ not designed for this
+Throughout the analysis conducted, a number of issues emerged both in relation to the data and the methodology.  Firstly, the boycott of the NSS resulted in an unusable set of universities, and consideration should be given to whether this analysis should have been run with an earlier, more complete dataset.  Some of the universities excluded from the satisfaction dataset appear at the high end of the REF dataset, so dropping these records entirely presents problems for analysis of what was intended to be a "whole-system" (all full service universities in a country) appraisal. 
 
+Timeliness of data may also present problems - the REF exercise was conducted in 2014, using outputs prepared and produced several years prior, while the NSS exercise was conducted in 2018 for finalist who had been studying for three or more years.  When compared with 'live' Foursquare data from 2019, the present reality may be quite different from the environment of a given university 8 or 9 years ago.
 
+Decisions had to be made around the metrics used, and for REF and NSS a 'proportion in the top bands' approach was used.  A grade point average for both may yield quite different results.  
+
+Both NSS and REF2014 are effectively samples - the student survey has a minimum respondent rate, and the REF exercise allowed universities to select who was submitted.  This may mean reality is not fully expressed in these datasets.
+
+While Foursquare data is very useful and rich, it was originally collected for different reasons which are predominantly social in nature, and so many results appear for commercial enterprises rather than describing the physical geography of a location.  Further tests could be conducted against geographic datasets to assess the representativeness and validity of using Foursquare data as a proxy in this way.
+
+Finally, since this exploration was iterative in nature it may be helpful to revisit the analysis with a revised and narrower business problem in mind, including being more explicit and definite about how to handle missing data.
 
 ## Section 6: Conclusion
-_where you conclude the report_
 
-
+It has been shown that it is certainly possible to link geographic, research quality and student satisfaction datasets in order to explore the possible relationship between the positive features of the surrounding environment and the performance of a university.  The relationships however appear to be weak when using only these three metrics - the variability and number of outliers in all comparisons does not lead to any clear correlation.  It is of note for further research that there may be a negative relationship between positive facilities and student satisfaction, but a positive relationship when compared against research output quality.  That is, the expectations and needs of staff may not be the same as those of students.  As might have been expected at the outset of this analysis, the diversity of universities which exist within the United Kingdom, and the diverse drivers for different types of student and staff to want to study and work at these universities, is part of the richness of a mature education landscape which cannot be reduced down to a few performance metrics.
