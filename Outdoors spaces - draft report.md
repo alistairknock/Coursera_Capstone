@@ -98,6 +98,8 @@ From these coordinates, [Foursquare data](https://developer.foursquare.com/docs/
 
 For each university therefore, _n_ venue categories will be present, each with a count of venues of that category within 5 kilometres of the university.  In this report we refer to Foursquare venues which appear in one of these categories as a 'positive facility' - i.e. a facility venue which fits the criteria of including natural/cultural provision and which could be considered to fostering a healthy and positive environment for work and study.
 
+While FourSquare's _search_ endpoint can be provided with a comma-separated list of categories, it was discovered that the API will only ever return 50 results and when combined the 5 kilometre radius this meant that requests would frequently hit this limit, limiting the usefulness and completeness of the data.  The categories were therefore queried individually - this resulted in many more queries to the API (around 10,000) but a richer dataset.  The data for each category was cached locally as a CSV file once obtained so that the API need only be used once.
+
 ### Research excellence data
 
 Where available for a university, data from the [Research Excellence Framework (REF) 2014](https://www.ref.ac.uk/2014/results/intro/) was incorporated into the university data.  The REF exercise is conducted periodically in the United Kingdom as a means of assessing the research quality of universities.  The REF dataset gives an assessment of research quality for each ‘unit of assessment’ (i.e. subject) where the quality of research is graded as 4 star (world-leading) down to 1 star (nationally recognised).  The data is supplied with staff size information which can be re-processed to form university-wide quality ratings using staff full-time equivalent (FTE) figures as a weighting.
@@ -115,15 +117,15 @@ The student survey questions can be clustered into a number of dimensions (for i
 ## Section 3: Methodology
 _which represents the main component of the report where you discuss and describe any exploratory data analysis that you did, any inferential statistical testing that you performed, and what machine learnings were used and why._
 
-Through, universities can be compared solely by the geographic and contextual factors, by the degree of research excellence, or by the levels of student satisfaction – and these factors can be brought together to explore any correlation between the various features present in the data.
+With the data available, universities can be compared solely by the geographic and contextual factors, by the degree of research excellence, or by the levels of student satisfaction – and these factors can be brought together to explore any correlation between the various features present in the data.  The methodology iterated several times, from a simple feature set using all institutions, to a geographically limited dataset to remove outliers, and then a more much detailed feature set which used granular data from Foursquare and NSS rather than subtotals.
 
-We began by obtaining copies of the three relevant flat files with the aim of removing unneeded columns and to restructure them into one dataframe which contains one record per university, the latitude/longitude, the student satisfaction measure, and research excellence measures.
+### Iteration 1, simple features
+
+We began by obtaining copies of the three relevant flat files with the aim of removing unneeded columns and to restructure them into one dataframe which contains one record per university, the latitude/longitude, the overall student satisfaction measure, and research excellence measures.
 
 FS
 
-The getMatchingVenues function takes lat/long and a single category (it would also take a list of comma-separated categories but here we have chosen to iterate through each category individually, since early tests showed that many results of a multi-category search would exceed the 50 result Foursquare limit and so be limited in their usefulness. By querying each category individually we increase the number of calls to the Foursquare API but increase the possible number of results substantially and lower the risk of hitting the 50 result limit).
 
-The writecsv argument can be provided to write a static CSV copy of the results to avoid hitting the API unnecessarily. These CSVs can be deleted should a refresh of the data be required.
 
 ## Section 4: Results
 _where you discuss the results_
