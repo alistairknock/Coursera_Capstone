@@ -135,7 +135,7 @@ The full set of features from the three data sources contains 3 research indicat
 * NSS question 27, 'NSS_Q27'
 * Foursquare subtotal of positive venues across all specified categories, 'TotalCount'
 
-Summary statistics on the Foursquare dataset include:
+**Table 1: Summary statistics on the Foursquare dataset**
 
 | Description | Figure |
 |---|---|
@@ -175,7 +175,7 @@ _Figure 5: UK map focused on London and the south east, with black markers showi
 
 Since there is the possibility of London universities behaving as exceptional cases due to the density of the city, we can return to this in a subsequent iteration with the option of excluding these outlier universities.
 
-We now assess the relationships between the three main features with scatter plots and a quadratic linear regression:
+We now assessed the relationships between the three main features with scatter plots and a quadratic linear regression:
 
 ![scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure6.PNG)
 
@@ -191,27 +191,49 @@ _Figure 8: Scatter plot of universities using REF outputs on the X axis and posi
 
 The initial scatters indicated there may be a weak negative relationship between student satisfaction - access to greater numbers of venues correlates to a small decrease in satisfaction. Conversely, the quality of REF outputs is positively correlated with the number of venues.  The approach taken to further investigate this was to using k-means clustering and DBSCAN to cluster the data and observe the differences in features between these clusters. Mapping these clusters also helped to identify any confounding and contributing geographical factors not currently present in the featureset.
 
-First, we scaled the features and use the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  
+First, we scaled the features and use the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  We again assessed the relationships between the three main features with scatter plots and a quadratic linear regression:
 
-![clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure9.PNG)
-
-_Figure 9: Clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis_
-
-![clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure10.PNG)
-
-_Figure 10: Clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis_
-
-![clustered scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure11.PNG)
-
-_Figure 11: Clustered scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
-
-Pearson's correlation co-efficient and R-squared values for each combination:
+**Table 2: Pearson's correlation co-efficient and R-squared values for each combination:**
 
 | Combination | Pearson's | R-squared | p-value |
 |---|---|---|---|
 |NSS Q27 and outputs | 0.096 | 0.009 | 0.259 |
 |NSS Q27 and positive facility count | -0.390 | 0.152 | <0.001 |
 |Outputs and positive facility count | 0.327 | 0.107  | <0.001 |
+
+![clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure9.PNG)
+
+_Figure 9: Clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis_
+
+Notably cluster 2 does not appear since it has zero NSS values and so is excluded from the graph.
+
+Cluster 3 appears distinct from the other two clusters, and cluster 0 has a very wide range, with points overlapping much of cluster 1.
+
+The regression line is weak and the spread of the clusters does not initially support close correlation.
+
+![clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure10.PNG)
+
+_Figure 10: Clustered scatter plot of universities using NSS question 27 on the X axis and positive facility total count on the Y axis_
+
+In contrast to the NSS/REF plot, here cluster 0 is distinct from other clusters, with all points showing high values for the positive venues feature.  As before, the zero NSS values mean cluster 2 is not plotted.  Cluster 1 and 3 overlap considerably and are not discrete in this view.  The regression line shows a reasonably strong negative correlation, though this may be influenced by the atypically high values from cluster 0.
+
+![clustered scatter plot of universities using REF outputs  on the X axis and positive facility total count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure11.PNG)
+
+_Figure 11: Clustered scatter plot of universities using REF outputs on the X axis and positive facility total count on the Y axis_
+
+This chart shows REF outputs against count of positive venues.  With the exception of cluster 2, here we have clear separation of the clusters, with cluster 0 remaining in the top positive venue range, and the other clusters being separated cleanly by low and mid-high REF performance.  The regression line shows positive correlation.
+
+Box plots were used to view the distribution of values within each cluster, summarised in table 3 below and which confirms that cluster 2 contained no NSS results, cluster 3 contained weak REF results, and cluster 0 contained very high counts of positive vanues - notably while cluster 1 and 3 contain small quantities of positive venues, cluster 2 shows significant range.
+
+**Table 3: Cluster labels with lower and upper quartiles**
+(note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
+
+| Number | Label | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
+|---|---|---|---|---|---|---|---|
+| 0 | High positive facilities, low NSS, high REF | 78% | 82% | 61% | 78% | 90% | 97% |
+| 1 | Low positive facilities, high NSS, high REF | 82% | 87% | 55% | 74% | 14% | 36% |
+| 2 | High positive facilities, no NSS, high REF | n/a | n/a | 59% | 83% | 32% | 97% |
+| 3 | Low positive facilities, high NSS, low REF | 80% | 86% | 29% | 36% | 13% | 36% |
 
 ## Section 4: Results
 _where you discuss the results_
