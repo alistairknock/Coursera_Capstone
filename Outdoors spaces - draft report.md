@@ -191,7 +191,9 @@ _Figure 8: Scatter plot of universities using REF outputs on the X axis and posi
 
 The initial scatters indicated there may be a weak negative relationship between student satisfaction - access to greater numbers of venues correlates to a small decrease in satisfaction. Conversely, the quality of REF outputs is positively correlated with the number of venues.  The approach taken to further investigate this was to using k-means clustering and DBSCAN to cluster the data and observe the differences in features between these clusters. Mapping these clusters also helped to identify any confounding and contributing geographical factors not currently present in the featureset.
 
-First, we scaled the features and use the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  We again assessed the relationships between the three main features with scatter plots and a quadratic linear regression:
+First, we scaled the features and use the elbow method to identify an appropriate number of clusters (k=4) and then ran k-means clustering on the dataset.  (Running a test using DBScan required high epsilon values (0.5 with a normalised range of 0-1.0) and low minimum sample values (10 from 166) to begin to separate any cluster from the noise, which likely indicates that the dataset does not cluster well (either in general or using this density method).)
+
+We again assessed the relationships between the three main features with scatter plots and a quadratic linear regression:
 
 **Table 2: Pearson's correlation co-efficient and R-squared values for each combination:**
 
@@ -200,6 +202,7 @@ First, we scaled the features and use the elbow method to identify an appropriat
 |NSS Q27 and outputs | 0.096 | 0.009 | 0.259 |
 |NSS Q27 and positive facility count | -0.390 | 0.152 | <0.001 |
 |Outputs and positive facility count | 0.327 | 0.107  | <0.001 |
+
 
 ![clustered scatter plot of universities using NSS question 27 on the X axis and REF outputs on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure9.PNG)
 
@@ -229,7 +232,7 @@ Box plots were used to view the distribution of values within each cluster, summ
 (note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
 
 | Number | Label | Colour | Number of universities | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
-|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|
 | 0 | High positive facilities, low NSS, high REF | Red | 20 | 78% | 82% | 61% | 78% | 90% | 97% |
 | 1 | Low positive facilities, high NSS, high REF | Purple | 16 | 82% | 87% | 55% | 74% | 14% | 36% |
 | 2 | High positive facilities, no NSS, high REF | Blue | 97 | n/a | n/a | 59% | 83% | 32% | 97% |
@@ -246,7 +249,7 @@ The counts of universities in each cluster are not even, with the largest cluste
 
 We ran the same k-means clustering and exploratory visualisations on this subset, again with k=4 providing the optimal number of clusters.
 
-**Table 3: Pearson's correlation co-efficient and R-squared values for each combination, excluding London:**
+**Table 4: Pearson's correlation co-efficient and R-squared values for each combination, excluding London:**
 
 | Combination | Pearson's | R-squared | p-value |
 |---|---|---|---|
@@ -257,6 +260,38 @@ We ran the same k-means clustering and exploratory visualisations on this subset
 ![Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure13.PNG)
 
 _Figure 13: Clustered scatter plot of universities using REF outputs on the X axis and positive facility count on the Y axis_
+
+**Table 5: Cluster labels with lower and upper quartiles, subset excluding London and NSS non-respondents**
+(note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
+
+| Number | Label | Colour | Number of universities | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
+|---|---|---|---|---|---|---|---|---|---|
+| 0 | High positive facilities, low NSS, high REF | Red | 40 | 81% | 85% | 59% | 75% | 35% | 40% |
+| 1 | Low positive facilities, high NSS, high REF | Purple | 40 | 84% | 88% | 60% | 76% | 10% | 21% |
+| 2 | High positive facilities, low NSS, low REF | Blue | 11 | 79% | 86% | 29% | 35% | 36% | 39% |
+| 3 | Low positive facilities, low NSS, low REF | Yellow | 39 | 81% | 85% | 33% | 49% | 9% | 19% |
+
+![map of UK universities including clusters as colours, subset excluding London](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure14.PNG)
+
+_Figure 14: UK map plotting all universities with k-means clusters as colours, subset excluding London and NSS non-respondents_
+
+Again, running a test using DBScan required high epsilon values (0.5 with a normalised range of 0-1.0) and low minimum sample values (10 from 130) to begin to separate any cluster from the noise, which likely indicates that the dataset does not cluster well (either in general or using this density method).
+
+### Iteration 3, all features
+
+Finally, we returned to the original three datasets and merged them to form a highly detailed dataset which included all 27 NSS questions, 3 profiles from REF, and a large number of venue categories with counts of positive venues.  (60 categories were provided to the API call, but Foursquare appears to return similar/subcategories in addition, so the total number of features in this dataset is now 340).  Our interest was mainly to test whether the simplified three-feature set was a reasonably proxy for the more granular data.
+
+The same process of k-means clustering was run on this detailed set (this time k=5) and the counts of universities falling into these five clusters was compared with the counts in the original four clusters.  Table 6 summarises these counts:
+
+**Table 6: Counts of universities in simple clustering (4 way) vs detailed clustering (5 way)**
+
+| Simple \ Detailed | 0 | 1 | 2 | 3 | 4 | 
+|---|---|---|---|---|---|
+| High positive facilities, low NSS, high REF | 1 | 16 | - | 1 | 2 |
+| Low positive facilities, high NSS, high REF | - | 4 | 7 | - | 5 |
+| High positive facilities, no NSS, high REF | 55 | - | - | 42 | - |
+| Low positive facilities, high NSS, low REF | 15 | - | - | 18 | - |
+
 
 
 ## Section 4: Results
