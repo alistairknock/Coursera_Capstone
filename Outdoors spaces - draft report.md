@@ -228,12 +228,18 @@ Box plots were used to view the distribution of values within each cluster, summ
 **Table 3: Cluster labels with lower and upper quartiles**
 (note that positive facilities is standardised to 100% in this table, whereas NSS and REF outputs show the original percentage score from the dataset)
 
-| Number | Label | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
-|---|---|---|---|---|---|---|---|
-| 0 | High positive facilities, low NSS, high REF | 78% | 82% | 61% | 78% | 90% | 97% |
-| 1 | Low positive facilities, high NSS, high REF | 82% | 87% | 55% | 74% | 14% | 36% |
-| 2 | High positive facilities, no NSS, high REF | n/a | n/a | 59% | 83% | 32% | 97% |
-| 3 | Low positive facilities, high NSS, low REF | 80% | 86% | 29% | 36% | 13% | 36% |
+| Number | Label | Colour | NSS Q27 lower | NSS Q27 upper | REF output lower | REF output upper| Positive facility lower | Positive facility upper | 
+|---|---|---|---|---|---|---|---|---|
+| 0 | High positive facilities, low NSS, high REF | Red | 78% | 82% | 61% | 78% | 90% | 97% |
+| 1 | Low positive facilities, high NSS, high REF | Purple | 82% | 87% | 55% | 74% | 14% | 36% |
+| 2 | High positive facilities, no NSS, high REF | Blue | n/a | n/a | 59% | 83% | 32% | 97% |
+| 3 | Low positive facilities, high NSS, low REF | Yellow | 80% | 86% | 29% | 36% | 13% | 36% |
+
+By including the clusters on the map, it is clear that the London-effect remains:
+
+![map of UK universities including clusters as colours](https://github.com/alistairknock/Coursera_Capstone/raw/master/os_figure12.PNG)
+
+_Figure 1: UK map plotting all universities with k-means clusters as colours_
 
 ## Section 4: Results
 _where you discuss the results_
